@@ -1,12 +1,12 @@
 {
-  "TITLE": "Moon Phase",
+  "TITLE": "Phases de la Lune",
   "UPDATE": "Update",
-  "NEW": "New Moon",
-  "WAX_CRESC": "Waxing Crescent",
-  "FIRST": "First Quarter",
-  "WAX_GIB": "Waxing Gibbous",
-  "FULL": "Full Moon",
-  "WAN_GIB": "Waning Gibbous",
-  "THIRD": "Third Quarter",
-  "WAN_CRESC": "Waning Crescent"
+  "NEW": "Nouvelle Lune",
+  "WAX_CRESC": "Premier Croissant",
+  "FIRST": "Premier Quartier",
+  "WAX_GIB": "Lune Gibbeuse Croissante",
+  "FULL": "Pleine Lune",
+  "WAN_GIB": "Lune Gibbeuse Decroissante",
+  "THIRD": "Dernier Quartier",
+  "WAN_CRESC": "Dernier Croissant"
 }
