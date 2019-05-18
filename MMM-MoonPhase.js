@@ -42,65 +42,68 @@ Module.register("MMM-MoonPhase", {
 		let title   = document.createElement("p");
 		title.id    = "moonphase-title";
 		if(this.config.title) {title.innerHTML = this.translate("TITLE");}
-		let moonImg = document.createElement("img");
-		moonImg.id  = "moonphase-img";
+		let moonCanvas = document.createElement("canvas");
+		moonCanvas.id  = "moonphase-canvas";
+		moonCanvas.height = "200";
+		moonCanvas.width = "200";
+		moonCanvas.style.background = "url('https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/Phases/full.png?raw=true')";
+		moonCanvas.style.backgroundSize = "cover";
+		this.drawCanvas(moonCanvas);
 		let phase   = document.createElement("p");
 		phase.id    = "moonphase-phase";
 		if(!this.config.phase){phase.style.display = "none";}
-
-		let moonPhase = this.calculatePhase();
-		moonPhase = Math.round(moonPhase);
-		let timestamp = new Date();
-		//TODO - reduce this to numeric file names to condense this
-		if(moonPhase === 0 || moonPhase === 29) {
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/new.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("NEW");
-		} else if (moonPhase === 1){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-cresc-1.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_CRESC");
-		} else if (moonPhase === 2){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-cresc-2.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_CRESC");
-		}else if (moonPhase === 3){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-cresc-3.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_CRESC");
-		}else if (moonPhase === 4){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-cresc-4.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_CRESC");
-		}else if (moonPhase === 5){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-cresc-5.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_CRESC");
-		}else if (moonPhase === 6){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-cresc-6.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_CRESC");
-		}else if (moonPhase === 7){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/first.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("FIRST");
-		}else if (moonPhase === 8 || moonPhase === 9){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-gibbous-1.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_GIB");
-		}else if (moonPhase === 10){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-gibbous-2.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_GIB");
-		}else if (moonPhase === 11 || moonPhase === 12){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-gibbous-3.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_GIB");
-		}else if (moonPhase === 13){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-gibbous-4.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_GIB");
-		}else if (moonPhase === 14){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/waxing-gibbous-5.png' + '?seed=' + timestamp;
-			phase.innerHTML = this.translate("WAX_GIB");
-		}else if(moonPhase === 15){
-			moonImg.src = 'modules/MMM-MoonPhase/images/Phases/full.png' + '?seed=' +  timestamp;
-			phase.innerHTML = this.translate("FULL");
-		}
-		
+		//Appending our empty elements to the DOM object
 		wrapper.appendChild(title);
-		wrapper.appendChild(moonImg);
+		wrapper.appendChild(moonCanvas);
 		wrapper.appendChild(phase);
-		
 		return wrapper;
+	},
+
+	drawCanvas: function(canvas){
+		let ctx = canvas.getContext("2d");
+		const X = 200;
+        const Y = 200;
+		const BEZ_HEIGHT = Y/10;
+
+		let day = this.calculatePhase();
+		let roundedDay = Math.floor(day);
+		let dayMod;
+
+		if(day <= 15){
+			dayMod = day;
+		} else {
+			dayMod = day%15;
+		}
+		let bezCover = X*1.15;
+		let bezDif = bezCover - X/2;
+		let step = 7;
+		let bezX = bezCover-( bezDif / step * dayMod);
+
+		if(day < 15 && day > 0){
+			ctx.shadowOffsetX = 7;
+			ctx.shadowColor = "black";
+			ctx.shadowBlur = 10;
+		}else if(day > 15 && day < 29){
+			ctx.shadowOffsetX = -7;
+			ctx.shadowColor = "black";
+			ctx.shadowBlur = 10;
+		}
+
+		ctx.beginPath();
+		ctx.moveTo(X/2, -10);
+		ctx.bezierCurveTo(bezX, BEZ_HEIGHT, bezX, Y-BEZ_HEIGHT, X/2, Y+10);
+		if(day <=15){
+			ctx.lineTo(0,Y);
+			ctx.lineTo(0,0);
+			ctx.lineTo(X/2, 0);
+			ctx.fill();
+		} else {
+			ctx.lineTo(X, Y);
+			ctx.lineTo(X, 0);
+			ctx.lineTo(X/2, 0);
+			ctx.fill();
+		}
+
 	},
 
 	getStyles: function () {
