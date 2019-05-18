@@ -91,11 +91,13 @@ Module.register("MMM-MoonPhase", {
 
 		let dayMod;
 
-		if(day <= 15){
+		if(day < 16){
 			dayMod = day;
-		} else {
+		} else if(day >= 16){
 			dayMod = day%15;
 		}
+		Log.log(dayMod);
+		Log.log(day);
 		let bezCover = X*1.15;
 		let bezDif = bezCover - X/2;
 		let step = 7;
@@ -105,7 +107,7 @@ Module.register("MMM-MoonPhase", {
 			ctx.shadowOffsetX = 7;
 			ctx.shadowColor = "black";
 			ctx.shadowBlur = 10;
-		}else if(day > 15 && day < 29){
+		}else if(day >= 16 && day < 29){
 			ctx.shadowOffsetX = -7;
 			ctx.shadowColor = "black";
 			ctx.shadowBlur = 10;
@@ -114,7 +116,7 @@ Module.register("MMM-MoonPhase", {
 		ctx.beginPath();
 		ctx.moveTo(X/2, -10);
 		ctx.bezierCurveTo(bezX, BEZ_HEIGHT, bezX, Y-BEZ_HEIGHT, X/2, Y+10);
-		if(day <=15){
+		if(day < 16){
 			ctx.lineTo(0,Y);
 			ctx.lineTo(0,0);
 			ctx.lineTo(X/2, 0);
