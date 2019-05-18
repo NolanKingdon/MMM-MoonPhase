@@ -9,12 +9,13 @@
 
 Module.register("MMM-MoonPhase", {
 	defaults: { //TODOs - Commented out
-		updateInterval: 43200000,
-	//	hemisphere: "North",
+		updateInterval: 43200000, // Every Twelve hours
+		hemisphere: "N", //N or S
 	//	resolution: "detailed",
-	//	language:   "en",
 		title: true, //Whether or not the Moon Phase Title is displayed
 		phase: true, //Label for what moon phase it is
+		x: "200",
+		y: "200"
 	},
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror
@@ -44,14 +45,14 @@ Module.register("MMM-MoonPhase", {
 		if(this.config.title) {title.innerHTML = this.translate("TITLE");}
 		let moonCanvas = document.createElement("canvas");
 		moonCanvas.id  = "moonphase-canvas";
-		moonCanvas.height = "200";
-		moonCanvas.width = "200";
+		moonCanvas.height = this.config.y;
+		moonCanvas.width = this.config.x;
 		moonCanvas.style.background = "url('https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/Phases/full.png?raw=true')";
 		moonCanvas.style.backgroundSize = "cover";
-		this.drawCanvas(moonCanvas);
 		let phase   = document.createElement("p");
 		phase.id    = "moonphase-phase";
 		if(!this.config.phase){phase.style.display = "none";}
+		this.drawCanvas(moonCanvas, phase);
 		//Appending our empty elements to the DOM object
 		wrapper.appendChild(title);
 		wrapper.appendChild(moonCanvas);
@@ -59,14 +60,33 @@ Module.register("MMM-MoonPhase", {
 		return wrapper;
 	},
 
-	drawCanvas: function(canvas){
+	drawCanvas: function(canvas, phase){
 		let ctx = canvas.getContext("2d");
-		const X = 200;
-        const Y = 200;
+		const X = parseInt(this.config.x);
+        	const Y = parseInt(this.config.y);
 		const BEZ_HEIGHT = Y/10;
 
 		let day = this.calculatePhase();
 		let roundedDay = Math.floor(day);
+		//There's definitely a better way to do this.
+		if(roundedDay == 0 || roundedDay == 29){
+			phase.innerHTML = this.translate("NEW");
+		}else if(roundedDay > 0 && roundedDay < 7){
+			phase.innerHTML = this.translate("WAX_CRESC");
+		}else if(roundedDay == 7) {
+			phase.innerHTML = this.translate("FIRST");
+		}else if(roundedDay > 7 && roundedDay < 15){
+			phase.innerHTML = this.translate("WAX_GIB");
+		}else if(roundedDay == 15){
+			phase.innerHTML = this.translate("FULL");
+		}else if(roundedDay > 15 && roundedDay < 22){
+			phase.innerHTML = this.translate("WAN_GIB");
+		}else if(roundedDay == 22) {
+			phase.innerHTML = this.translate("THIRD");
+		}else if(roundedDay > 22 && roundedDay < 29){
+			phase.innerHTML = this.translate("WAN_CRESC");
+		}
+
 		let dayMod;
 
 		if(day <= 15){
@@ -103,6 +123,7 @@ Module.register("MMM-MoonPhase", {
 			ctx.lineTo(X/2, 0);
 			ctx.fill();
 		}
+		if(this.config.hemisphere.toUpperCase() === "S"){canvas.style.transform = "rotate(180deg)";}
 
 	},
 
