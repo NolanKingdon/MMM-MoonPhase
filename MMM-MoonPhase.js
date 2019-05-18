@@ -40,9 +40,11 @@ Module.register("MMM-MoonPhase", {
 
 		// create element wrapper for show into the module
 		let wrapper = document.createElement("div");
+		wrapper.id = "moonphase-wrapper";
 		let title   = document.createElement("p");
 		title.id    = "moonphase-title";
-		if(this.config.title) {title.innerHTML = this.translate("TITLE");}
+		//title.style.borderBottom = "1px solid white";
+		if(this.config.title) {title.innerHTML = this.translate("TITLE");}else{title.style.display="none";}
 		let moonCanvas = document.createElement("canvas");
 		moonCanvas.id  = "moonphase-canvas";
 		moonCanvas.height = this.config.y;
