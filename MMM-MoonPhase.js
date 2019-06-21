@@ -131,17 +131,17 @@ Module.register("MMM-MoonPhase", {
 		ctx.beginPath();
 		
 		//Applying blur to our stroke		
-		if(jDate[1] < 15 && jDate[1] > 0){
-			ctx.shadowOffsetX = 7;
-			ctx.shadowOffsetY = -1;
+		/*if(jDate[1] < 15 && jDate[1] > 0){
+			ctx.shadowOffsetX = 4;
+			//ctx.shadowOffsetY = -10;
 			ctx.shadowColor = "black";
 			ctx.shadowBlur = 10;
 		}else if(jDate[1] >= 16 && jDate[1] < 29){
-			ctx.shadowOffsetX = -7;
-			ctx.shadowOffsetY = -1;
+			ctx.shadowOffsetX = -4;
+			//ctx.shadowOffsetY = -0;
 			ctx.shadowColor = "black";
-			ctx.shadowBlur = 10;
-		}
+			ctx.shadowBlur = 5;
+		}*/
 		
 		for (i = 0; i < 180; i += increase_by) {
 			this.drawPoint(this.rotate(this.sphericalToPoint(90, i)), ctx);
