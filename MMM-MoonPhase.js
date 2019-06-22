@@ -11,11 +11,13 @@ Module.register("MMM-MoonPhase", {
 	defaults: { //TODOs - Commented out
 		updateInterval: 43200000, // Every Twelve hours
 		hemisphere: "N", //N or S
-	//	resolution: "detailed",
+		resolution: "basic", // detailed Or basic
+		basicColor: "#ffffbe", // White is a good one
 		title: true, //Whether or not the Moon Phase Title is displayed
 		phase: true, //Label for what moon phase it is
-		x: 200,
-		y: 200
+		x: 200, // x dimension
+		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
+		alpha: 1 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
 	},
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror
@@ -55,8 +57,10 @@ Module.register("MMM-MoonPhase", {
 		moonCanvas.height = this.config.y;
 		moonCanvas.width = this.config.x;
 		//Adding in the background img
-		moonCanvas.style.background = "url('https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/Phases/full.png?raw=true')";
-		moonCanvas.style.backgroundSize = "cover";
+		if(this.config.resolution == "detailed"){
+			moonCanvas.style.background = "url('https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/Phases/full.png?raw=true')";
+			moonCanvas.style.backgroundSize = "cover";	
+		}		
 		//Adding in our moon phase for below the moon
 		let phase   = document.createElement("p");
 		phase.id    = "moonphase-phase";
@@ -128,9 +132,9 @@ Module.register("MMM-MoonPhase", {
 	drawAxisCircles: function(jDate, ctx) {
 		// Clear canvas
 		ctx.clearRect(0, 0, this.config.x, this.config.y);
-		ctx.beginPath();
 		
-		//Applying blur to our stroke		
+		
+		//Applying blur to our stroke -- TODO - implement smoothly. Right now it ridges the shadow		
 		/*if(jDate[1] < 15 && jDate[1] > 0){
 			ctx.shadowOffsetX = 4;
 			//ctx.shadowOffsetY = -10;
@@ -143,13 +147,26 @@ Module.register("MMM-MoonPhase", {
 			ctx.shadowBlur = 5;
 		}*/
 		
+		if(this.config.resolution == "basic"){
+			ctx.beginPath();
+			ctx.fillStyle = this.config.basicColor;
+			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 1.5*Math.PI, 3.5 * Math.PI);
+			ctx.fill();
+			// Have to move back the cursor to not have interfering lines
+			ctx.moveTo(this.config.x/2, this.config.y);
+			ctx.closePath();
+		} 
+		
+		ctx.beginPath();
 		for (i = 0; i < 180; i += increase_by) {
+			ctx.fillStyle = "black";
 			this.drawPoint(this.rotate(this.sphericalToPoint(90, i)), ctx);
 		}
+		console.log(jDate[1]);
 		if(jDate[1] < 15){// We are in waxing phases
 			ctx.lineTo(0, this.config.y);
-			ctx.lineTo(0, this.config.y);
-			ctx.lineTo(0,0);
+			ctx.lineTo(0, 0);
+			ctx.lineTo(this.config.x/2, 0);
 			ctx.fill();
 		} else if(jDate[1] >= 15){
 			ctx.lineTo(this.config.x, this.config.y);
@@ -160,13 +177,15 @@ Module.register("MMM-MoonPhase", {
 	},
 	
 	drawCanvas: function(phase, canvas){
-		//let testDay = 2; //[testDay%15, testDay];
-   	    let jDate = this.getMoonPhase();
+		//let testDay = 10;
+   	    let jDate = this.getMoonPhase(); //[testDay%15, testDay];
 
 	    var d_canvas = canvas;//document.getElementById('canvas');
 	    var ctx = d_canvas.getContext('2d');
 	    increase_by = 2;
 	    r = this.config.x/2; // radius
+	    // Getting the percentage of the way through the moon cycle so we can use that percent to determing
+	    // How far to draw the curve
 	    rotate_a = [0, 360*(jDate[0]/29.5), 0]; // rotation angles
 		
 		//Starting the chain to draw the current curve of the moon
@@ -182,21 +201,21 @@ Module.register("MMM-MoonPhase", {
 		this.drawAxisCircles(jDate, ctx);
 		
 		//There's definitely a better way to do this.
-		if(jDate[1] == 0 || jDate[1] == 29){
+		if(jDate[1] < 1 || jDate[1] > 29){
 			phase.innerHTML = this.translate("NEW");
-		}else if(jDate[1] > 0 && jDate[1] < 7){
+		}else if(jDate[1] > 1 && jDate[1] < 7){
 			phase.innerHTML = this.translate("WAX_CRESC");
-		}else if(jDate[1] == 7) {
+		}else if(jDate[1] >= 7 && jDate[1] <= 8) {
 			phase.innerHTML = this.translate("FIRST");
-		}else if(jDate[1] > 7 && jDate[1] < 15){
+		}else if(jDate[1] > 8 && jDate[1] < 14){
 			phase.innerHTML = this.translate("WAX_GIB");
-		}else if(jDate[1] == 15){
+		}else if(jDate[1] > 14 && jDate[1] < 16){
 			phase.innerHTML = this.translate("FULL");
-		}else if(jDate[1] > 15 && jDate[1] < 22){
+		}else if(jDate[1] > 16 && jDate[1] < 21){
 			phase.innerHTML = this.translate("WAN_GIB");
-		}else if(jDate[1] == 22) {
+		}else if(jDate[1] >= 22 && jDate[1] <= 23) {
 			phase.innerHTML = this.translate("THIRD");
-		}else if(jDate[1] > 22 && jDate[1] < 29){
+		}else if(jDate[1] > 23 && jDate[1] < 29){
 			phase.innerHTML = this.translate("WAN_CRESC");
 		}
 
