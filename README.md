@@ -19,6 +19,7 @@ npm install
 ```
 
 To use this module, add the following configuration block to the modules array in the `config/config.js` file:
+
 ```js
 var config = {
     modules: [
@@ -40,23 +41,6 @@ var config = {
     ]
 }
 ```
-
-		{
-			module: "MMM-MoonPhase",
-			position: "top_center",
-			config: {
-				updateInterval: 3600000,
-				hemisphere: "N",
-				resolution: "basic",
-				basicColor: "white",
-				title: true,
-				phase: true,
-				x: 200,
-				y: 200,
-				alpha: 0.7
-			},
-
-		},
 
 ## Configuration options
 
