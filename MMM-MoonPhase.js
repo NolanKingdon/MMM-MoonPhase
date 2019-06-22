@@ -17,7 +17,7 @@ Module.register("MMM-MoonPhase", {
 		phase: true, //Label for what moon phase it is
 		x: 200, // x dimension
 		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
-		alpha: 0.9 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
+		alpha: 1 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
 	},
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror

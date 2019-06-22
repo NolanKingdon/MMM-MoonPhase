@@ -22,24 +22,15 @@ var config = {
 
 ## Configuration options
 
-| Option           | Description                                       | Default
-|----------------- |---------------------------------------------------|----------
-| `updateInterval` | *Optional* Miliseconds between updates            | `43200000` (12 hours)
-| `hemisphere`     | *Optional* Your location on the earth             | `"N"` (Northern Hemisphere)
-| `resolution`     | *Optional* Use detailed moon image or basic circle| `"detailed"`
-| `basicColor`     | *Optional* Color of moon if using basic resolution| `"white"`
-| `title`          | *Optional* Toggle module title                    | `true` 
-| `phase`          | *Optional* Toggle phase label                     | `true` 
-| `x`              | *Optional* Width                                  | `200`
-| `y`              | *Optional* Height                                 | `200`
-| `alpha`          | *Optional* Visibility of dark side of moon        | `0.9` Slightly visible under shadow
+| Option           | Description                                       | Default              | Possible
+|----------------- |---------------------------------------------------|----------------------|-----------
+| `updateInterval` | *Optional* Miliseconds between updates            | `43200000` (12 hours)| any
+| `hemisphere`     | *Optional* Your location on the earth             | `"N"` (North)        | "N"/"S"
+| `resolution`     | *Optional* Use detailed moon image or basic circle| `"detailed"`         | "detailed"/"basic"
+| `basicColor`     | *Optional* Color of moon if using basic resolution| `"white"`            | any valid css color
+| `title`          | *Optional* Toggle module title                    | `true`               | true/false
+| `phase`          | *Optional* Toggle phase label                     | `true`               | true/false
+| `x`              | *Optional* Width (recommended <300)               | `200`                | >0
+| `y`              | *Optional* Height (recommended <300)              | `200`                | >0
+| `alpha`          | *Optional* Visibility of dark side of moon        | `1` (Invisible)      | >=0 to <= 1
 
-		updateInterval: 43200000, // Every Twelve hours
-		hemisphere: "N", //N or S
-		resolution: "detailed", // detailed Or basic
-		basicColor: "white", // "#ffffbe" is a good one
-		title: true, //Whether or not the Moon Phase Title is displayed
-		phase: true, //Label for what moon phase it is
-		x: 200, // x dimension
-		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
-		alpha: 0.9 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
