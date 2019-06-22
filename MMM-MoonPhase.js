@@ -11,13 +11,13 @@ Module.register("MMM-MoonPhase", {
 	defaults: { //TODOs - Commented out
 		updateInterval: 43200000, // Every Twelve hours
 		hemisphere: "N", //N or S
-		resolution: "basic", // detailed Or basic
+		resolution: "detailed", // detailed Or basic
 		basicColor: "#ffffbe", // White is a good one
 		title: true, //Whether or not the Moon Phase Title is displayed
 		phase: true, //Label for what moon phase it is
 		x: 200, // x dimension
 		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
-		alpha: 1 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
+		alpha: 0.9 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
 	},
 
 	requiresVersion: "2.1.0", // Required version of MagicMirror
@@ -80,7 +80,7 @@ Module.register("MMM-MoonPhase", {
 	drawPoint: function(coor, ctx){
 		// If the points z coordinate is less than
 		// zero, it is out of view thus, grey.
-		if (coor[2] >= 0) color = "rgb(0,0,0)";
+		if (coor[2] >= 0) color = "rgba(0,0,0, " + this.config.alpha + ")";
 		else color = "transparent";
 		ctx.fillStyle = color;
 		ctx.lineTo(this.config.x/2 + coor[0], this.config.y/2 - coor[1]);
@@ -159,7 +159,7 @@ Module.register("MMM-MoonPhase", {
 		
 		ctx.beginPath();
 		for (i = 0; i < 180; i += increase_by) {
-			ctx.fillStyle = "black";
+			ctx.fillStyle = "rgba(0,0,0, " + this.config.alpha + ")";
 			this.drawPoint(this.rotate(this.sphericalToPoint(90, i)), ctx);
 		}
 		console.log(jDate[1]);
