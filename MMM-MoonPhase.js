@@ -12,7 +12,7 @@ Module.register("MMM-MoonPhase", {
 		updateInterval: 43200000, // Every Twelve hours
 		hemisphere: "N", //N or S
 		resolution: "detailed", // detailed Or basic
-		basicColor: "#ffffbe", // White is a good one
+		basicColor: "white", // "#ffffbe" is a good one
 		title: true, //Whether or not the Moon Phase Title is displayed
 		phase: true, //Label for what moon phase it is
 		x: 200, // x dimension

@@ -22,7 +22,24 @@ var config = {
 
 ## Configuration options
 
-| Option           | Description
-|----------------- |-----------
-| `option1`        | *Required* DESCRIPTION HERE
-| `option2`        | *Optional* DESCRIPTION HERE TOO <br><br>**Type:** `int`(milliseconds) <br>Default 60000 milliseconds (1 minute)
+| Option           | Description                                       | Default
+|----------------- |---------------------------------------------------|----------
+| `updateInterval` | *Optional* Miliseconds between updates            | `43200000` (12 hours)
+| `hemisphere`     | *Optional* Your location on the earth             | `"N"` (Northern Hemisphere)
+| `resolution`     | *Optional* Use detailed moon image or basic circle| `"detailed"`
+| `basicColor`     | *Optional* Color of moon if using basic resolution| `"white"`
+| `title`          | *Optional* Toggle module title                    | `true` 
+| `phase`          | *Optional* Toggle phase label                     | `true` 
+| `x`              | *Optional* Width                                  | `200`
+| `y`              | *Optional* Height                                 | `200`
+| `alpha`          | *Optional* Visibility of dark side of moon        | `0.9` Slightly visible under shadow
+
+		updateInterval: 43200000, // Every Twelve hours
+		hemisphere: "N", //N or S
+		resolution: "detailed", // detailed Or basic
+		basicColor: "white", // "#ffffbe" is a good one
+		title: true, //Whether or not the Moon Phase Title is displayed
+		phase: true, //Label for what moon phase it is
+		x: 200, // x dimension
+		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
+		alpha: 0.9 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
