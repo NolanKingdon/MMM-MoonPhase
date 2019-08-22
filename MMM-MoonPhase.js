@@ -164,14 +164,13 @@ Module.register("MMM-MoonPhase", {
 		}
 		console.log(jDate[1]);
 		if(jDate[1] < 15){// We are in waxing phases
-			ctx.lineTo(0, this.config.y);
-			ctx.lineTo(0, 0);
-			ctx.lineTo(this.config.x/2, 0);
+
+			// ClockWise
+			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 0.5*Math.PI, 1.5*Math.PI);
 			ctx.fill();
 		} else if(jDate[1] >= 15){
-			ctx.lineTo(this.config.x, this.config.y);
-			ctx.lineTo(this.config.x, 0);
-			ctx.lineTo(this.config.x/2, 0);
+			// Arc counter clckwise
+			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 0.5*Math.PI, 1.5*Math.PI, true);
 			ctx.fill();
 		}
 	},
