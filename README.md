@@ -13,7 +13,7 @@ Displays the realtime moonphase and increments the shadow daily.
 To install this module, navigate into `~/MagicMirror/modules` and type the following commands:
 ```
 git clone https://github.com/NolanKingdon/MMM-MoonPhase
-cd MMM-MagicMirror
+cd MMM-MoonPhase
 npm install
 
 ```
