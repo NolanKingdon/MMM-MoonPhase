@@ -235,6 +235,7 @@ Module.register("MMM-MoonPhase", {
 		//FIXME: This can be load a one file javascript definition
 		return {
 			en: "translations/en.json",
+			de: "translations/de.json",
 			es: "translations/es.json"
 		};
 	},
