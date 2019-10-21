@@ -1,12 +1,12 @@
 {
-  "TITLE": "Moon Phase",
-  "UPDATE": "Update",
-  "NEW": "New Moon",
-  "WAX_CRESC": "Waxing Crescent",
-  "FIRST": "First Quarter",
-  "WAX_GIB": "Waxing Gibbous",
-  "FULL": "Full Moon",
-  "WAN_GIB": "Waning Gibbous",
-  "THIRD": "Third Quarter",
-  "WAN_CRESC": "Waning Crescent"
+  "TITLE": "Mondphase",
+  "UPDATE": "aktualisiere",
+  "NEW": "Neumond",
+  "WAX_CRESC": "zunehmender Halbmond",
+  "FIRST": "erstes Viertel",
+  "WAX_GIB": "zunehmender Dreiviertelmond",
+  "FULL": "Vollmond",
+  "WAN_GIB": "abnehmender Dreiviertelmond",
+  "THIRD": "drittes Viertel",
+  "WAN_CRESC": "abnehmender Halbmond"
 }
