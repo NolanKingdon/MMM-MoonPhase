@@ -38,15 +38,13 @@ Module.register("MMM-MoonPhase", {
 	},
 
 	getDom: function() {
-		var self = this;
-
 		// create element wrapper
 		let wrapper = document.createElement("div");
 		wrapper.id = "moonphase-wrapper";
 		let title   = document.createElement("p");
 		title.id    = "moonphase-title";
 		// If title is turned on - Create Title
-		if(this.config.title) {
+		if (this.config.title) {
 			title.innerHTML = this.translate("TITLE");
 		} else {
 			title.style.display="none";
@@ -57,15 +55,15 @@ Module.register("MMM-MoonPhase", {
 		moonCanvas.height = this.config.y;
 		moonCanvas.width = this.config.x;
 		//Adding in the background img
-		if(this.config.resolution == "detailed"){
+		if (this.config.resolution === "detailed"){
 			moonCanvas.style.background = "url('https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/Phases/full.png?raw=true')";
-			moonCanvas.style.backgroundSize = "cover";	
-		}		
+			moonCanvas.style.backgroundSize = "cover";
+		}
 		//Adding in our moon phase for below the moon
 		let phase   = document.createElement("p");
 		phase.id    = "moonphase-phase";
-	
-		if(!this.config.phase){ // Hiding the title if turned off in config
+
+		if (!this.config.phase){ // Hiding the title if turned off in config
 			phase.style.display = "none";
 		}
 		//Drawing on the existing canvas
@@ -80,18 +78,20 @@ Module.register("MMM-MoonPhase", {
 	drawPoint: function(coor, ctx){
 		// If the points z coordinate is less than
 		// zero, it is out of view thus, grey.
-		if (coor[2] >= 0) color = "rgba(0,0,0, " + this.config.alpha + ")";
-		else color = "transparent";
+		var color = "transparent";
+		if (coor[2] >= 0) {
+			color = "rgba(0,0,0, " + this.config.alpha + ")";
+		}
 		ctx.fillStyle = color;
 		ctx.lineTo(this.config.x/2 + coor[0], this.config.y/2 - coor[1]);
 		ctx.stroke();
 	},
-	
-    // Degree to radians
+
+	// Degree to radians
 	radians: function(angle) {
 		return angle * (Math.PI / 180);
 	},
-	
+
 	// Convert spherical coordinate to x y z coordinate
 	sphericalToPoint: function(ascension, declination) {
 		ascension = this.radians(ascension);
@@ -102,52 +102,51 @@ Module.register("MMM-MoonPhase", {
 			Math.cos(ascension) * Math.sin(declination) * r
 		];
 	},
-	
+
 	// Turn for x (0), y (1) or z (2) axis
 	rotateForAxis: function(axis, coor, angle) {
 		angle = this.radians(angle);
-		static = coor.splice(axis, 1)[0];
-		c1 = coor[0];
-		c2 = coor[1];
+		let coorStatic = coor.splice(axis, 1)[0];
+		let c1 = coor[0];
+		let c2 = coor[1];
 
 		coor = [
 			Math.cos(angle) * c1 - Math.sin(angle) * c2,
 			Math.sin(angle) * c1 + Math.cos(angle) * c2
 		];
 
-		coor.splice(axis, 0, static);
+		coor.splice(axis, 0, coorStatic);
 
 		return coor;
 	 },
-	
+
 	// Turn for all axis rotations
 	rotate: function(coor) {
 		return this.rotateForAxis(
 			2, this.rotateForAxis(
 				1, this.rotateForAxis(
-					0, coor, rotate_a[0]), rotate_a[1]), rotate_a[2]);
+					0, coor, rotateA[0]), rotateA[1]), rotateA[2]);
 	},
-	
+
 	// Draw three axis circles
 	drawAxisCircles: function(jDate, ctx) {
 		// Clear canvas
 		ctx.clearRect(0, 0, this.config.x, this.config.y);
-		
-		
-		//Applying blur to our stroke -- TODO - implement smoothly. Right now it ridges the shadow		
-		/*if(jDate[1] < 15 && jDate[1] > 0){
+
+		//Applying blur to our stroke -- TODO - implement smoothly. Right now it ridges the shadow
+		/*if (jDate[1] < 15 && jDate[1] > 0){
 			ctx.shadowOffsetX = 4;
 			//ctx.shadowOffsetY = -10;
 			ctx.shadowColor = "black";
 			ctx.shadowBlur = 10;
-		}else if(jDate[1] >= 16 && jDate[1] < 29){
+		} else if (jDate[1] >= 16 && jDate[1] < 29){
 			ctx.shadowOffsetX = -4;
 			//ctx.shadowOffsetY = -0;
 			ctx.shadowColor = "black";
 			ctx.shadowBlur = 5;
 		}*/
-		
-		if(this.config.resolution == "basic"){
+
+		if (this.config.resolution === "basic"){
 			ctx.beginPath();
 			ctx.fillStyle = this.config.basicColor;
 			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 1.5*Math.PI, 3.5 * Math.PI);
@@ -155,72 +154,70 @@ Module.register("MMM-MoonPhase", {
 			// Have to move back the cursor to not have interfering lines
 			ctx.moveTo(this.config.x/2, this.config.y);
 			ctx.closePath();
-		} 
-		
+		}
+
 		ctx.beginPath();
-		for (i = 0; i < 180; i += increase_by) {
+		for (i = 0; i < 180; i += increaseBy) {
 			ctx.fillStyle = "rgba(0,0,0, " + this.config.alpha + ")";
 			this.drawPoint(this.rotate(this.sphericalToPoint(90, i)), ctx);
 		}
 		console.log(jDate[1]);
-		if(jDate[1] < 15){// We are in waxing phases
+		if (jDate[1] < 15){// We are in waxing phases
 
 			// ClockWise
 			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 0.5*Math.PI, 1.5*Math.PI);
 			ctx.fill();
-		} else if(jDate[1] >= 15){
+		} else if (jDate[1] >= 15){
 			// Arc counter clckwise
 			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 0.5*Math.PI, 1.5*Math.PI, true);
 			ctx.fill();
 		}
 	},
-	
+
 	drawCanvas: function(phase, canvas){
 		//let testDay = 10;
    	    let jDate = this.getMoonPhase(); //[testDay%15, testDay];
 
-	    var d_canvas = canvas;//document.getElementById('canvas');
-	    var ctx = d_canvas.getContext('2d');
-	    increase_by = 2;
+	    var ctx = canvas.getContext("2d");
+	    increaseBy = 2;
 	    r = this.config.x/2; // radius
 	    // Getting the percentage of the way through the moon cycle so we can use that percent to determing
 	    // How far to draw the curve
-	    rotate_a = [0, 360*(jDate[0]/29.5), 0]; // rotation angles
-		
+	    rotateA = [0, 360*(jDate[0]/29.5), 0]; // rotation angles
+
 		//Starting the chain to draw the current curve of the moon
-		
+
 		/* NOTE - Math was heavily referenced from here:
-		 * 
+		 *
 		 * https://medium.com/@refik/a-journey-and-a-method-for-drawing-spheres-5b24246ca479
 		 * https://github.com/refik/rotate-sphere
-		 * 
+		 *
 		 * A great writeup + the code tool he mentions in the article. These have been a great help
 		 * to me.
 		 */
 		this.drawAxisCircles(jDate, ctx);
-		
+
 		//There's definitely a better way to do this.
-		if(jDate[1] < 1 || jDate[1] > 29){
+		if (jDate[1] < 1 || jDate[1] > 29){
 			phase.innerHTML = this.translate("NEW");
-		}else if(jDate[1] > 1 && jDate[1] < 7){
+		} else if (jDate[1] > 1 && jDate[1] < 7){
 			phase.innerHTML = this.translate("WAX_CRESC");
-		}else if(jDate[1] >= 7 && jDate[1] <= 8) {
+		} else if (jDate[1] >= 7 && jDate[1] <= 8) {
 			phase.innerHTML = this.translate("FIRST");
-		}else if(jDate[1] > 8 && jDate[1] < 14){
+		} else if (jDate[1] > 8 && jDate[1] < 14){
 			phase.innerHTML = this.translate("WAX_GIB");
-		}else if(jDate[1] > 14 && jDate[1] < 16){
+		} else if (jDate[1] > 14 && jDate[1] < 16){
 			phase.innerHTML = this.translate("FULL");
-		}else if(jDate[1] > 16 && jDate[1] < 21){
+		} else if (jDate[1] > 16 && jDate[1] < 21){
 			phase.innerHTML = this.translate("WAN_GIB");
-		}else if(jDate[1] >= 22 && jDate[1] <= 23) {
+		} else if (jDate[1] >= 22 && jDate[1] <= 23) {
 			phase.innerHTML = this.translate("THIRD");
-		}else if(jDate[1] > 23 && jDate[1] < 29){
+		} else if (jDate[1] > 23 && jDate[1] < 29){
 			phase.innerHTML = this.translate("WAN_CRESC");
 		}
 
-	
 		// Transforming the moon image to align with the southern hemisphere
-		if(this.config.hemisphere.toUpperCase() === "S"){canvas.style.transform = "rotate(180deg)";}
+		if (this.config.hemisphere.toUpperCase() === "S"){canvas.style.transform = "rotate(180deg)";}
 
 	},
 
@@ -236,6 +233,8 @@ Module.register("MMM-MoonPhase", {
 		return {
 			en: "translations/en.json",
 			de: "translations/de.json",
+			fr: "translations/fr.json",
+			sv: "translations/sv.json",
 			es: "translations/es.json"
 		};
 	},
@@ -247,7 +246,7 @@ Module.register("MMM-MoonPhase", {
 		let y = currDate.getFullYear();
 
 		//Adjusting as per our formula found above
-		if(m === 1 || m === 2){
+		if (m === 1 || m === 2){
 		  y = y-1;
 		  m = m + 12;
 		}
@@ -267,10 +266,10 @@ Module.register("MMM-MoonPhase", {
 		let dayOfCycleMod = dayOfCycle%15; // Allows us to utilize the 180deg math below --> Use the same curve twice = less calc
 		//Returning our modded day AND our actual day
 		return [dayOfCycleMod, dayOfCycle];
-  },
+	},
 	// socketNotificationReceived from helper
 	socketNotificationReceived: function (notification, payload) {
-		if(notification === "MMM-MoonPhase-PHASE-RECIEVED") {
+		if (notification === "MMM-MoonPhase-PHASE-RECIEVED") {
 			this.updateDom();
 		}
 	},
