@@ -18,7 +18,7 @@ module.exports = NodeHelper.create({
 	 * argument payload mixed - The payload of the notification.
 	 */
 	socketNotificationReceived: function(notification, payload) {
-		console.log("Moon recieved notification");
+		console.log("Moon received notification");
 		console.log(notification);
 		if (notification === "MMM-MoonPhase-GET-PHASE") {
 			console.log("Calculating Moon Phase");
@@ -26,9 +26,8 @@ module.exports = NodeHelper.create({
 			console.log("Phase is: " + phase);
 		}
 	},
-	
 
-/*
+	/*
 	// Example function send notification test
 	sendNotificationTest: function(payload) {
 		this.sendSocketNotification("MMM-MoonPhase-NOTIFICATION_TEST", payload);
