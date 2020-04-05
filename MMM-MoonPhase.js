@@ -56,9 +56,10 @@ Module.register("MMM-MoonPhase", {
 		moonCanvas.width = this.config.x;
 		//Adding in the background img
 		if (this.config.resolution === "detailed"){
-			moonCanvas.style.background = "url('https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/Phases/full.png?raw=true')";
+			moonCanvas.style.background = "url('./MMM-MoonPhase/Phases/full.png?raw=true')";
 			moonCanvas.style.backgroundSize = "cover";
 		}
+
 		//Adding in our moon phase for below the moon
 		let phase   = document.createElement("p");
 		phase.id    = "moonphase-phase";
