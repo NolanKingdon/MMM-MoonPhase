@@ -15,6 +15,7 @@ Module.register("MMM-MoonPhase", {
 		basicColor: "white", // "#ffffbe" is a good one
 		title: true, //Whether or not the Moon Phase Title is displayed
 		phase: true, //Label for what moon phase it is
+		age: false, //display the age of the moon in days
 		x: 200, // x dimension
 		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
 		alpha: 1 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
@@ -67,12 +68,23 @@ Module.register("MMM-MoonPhase", {
 		if (!this.config.phase){ // Hiding the title if turned off in config
 			phase.style.display = "none";
 		}
+
+		//Add in age of moon in days
+		let age = document.createElement("p");
+                age.id  = "moonphase-age";
+
+		if (!this.config.age){ // Hide age if turned off in config
+			age.style.display = "none";
+		}
+
 		//Drawing on the existing canvas
-		this.drawCanvas(phase, moonCanvas);
+		this.drawCanvas(age, phase, moonCanvas);
+
 		//Appending our elements to the DOM object
 		wrapper.appendChild(title);
 		wrapper.appendChild(moonCanvas);
 		wrapper.appendChild(phase);
+		wrapper.appendChild(age);
 		return wrapper;
 	},
 
@@ -175,7 +187,7 @@ Module.register("MMM-MoonPhase", {
 		}
 	},
 
-	drawCanvas: function(phase, canvas){
+	drawCanvas: function(age, phase, canvas){
 		//let testDay = 10;
    	    let jDate = this.getMoonPhase(); //[testDay%15, testDay];
 
@@ -219,6 +231,9 @@ Module.register("MMM-MoonPhase", {
 
 		// Transforming the moon image to align with the southern hemisphere
 		if (this.config.hemisphere.toUpperCase() === "S"){canvas.style.transform = "rotate(180deg)";}
+
+		// Add age of the moon
+		age.innerHTML = Math.round(jDate[1]) + " " + this.translate("DAYS");
 
 	},
 
