@@ -30,6 +30,13 @@
 	font-size: 18pt;
 }
 
+#moonphase-age {
+	text-align: center;
+	font-weight: 400;
+	color: grey;
+	font-size: 18pt;
+}
+
 #moonphase-canvas {
 	margin-left: auto;
 	margin-right: auto;

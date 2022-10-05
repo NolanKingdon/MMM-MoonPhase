@@ -8,5 +8,6 @@
   "FULL": "Full Moon",
   "WAN_GIB": "Waning Gibbous",
   "THIRD": "Third Quarter",
-  "WAN_CRESC": "Waning Crescent"
+  "WAN_CRESC": "Waning Crescent",
+  "DAYS": "days"
 }
