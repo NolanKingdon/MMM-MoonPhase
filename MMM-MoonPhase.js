@@ -1,6 +1,6 @@
 /* global Module */
 
-/* Magic Mirror
+/* MagicMirror²
  * Module: MMM-MoonPhase
  *
  * By Nolan Kingdon
@@ -21,7 +21,7 @@ Module.register("MMM-MoonPhase", {
 		alpha: 1 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
 	},
 
-	requiresVersion: "2.1.0", // Required version of MagicMirror
+	requiresVersion: "2.1.0", // Required version of MagicMirror²
 
 	start: function() {
 		var self = this;
