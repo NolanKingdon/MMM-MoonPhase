@@ -62,8 +62,9 @@ Module.register("MMM-MoonPhase", {
 	},
 	getDom: function() {
 		const wrapper = document.createElement("div");
-		wrapper.id = "moonphase-wrapper";
 		const title = document.createElement("p");
+		const jDate = this.moonData.jDate;
+		wrapper.id = "moonphase-wrapper";
 		title.id = "moonphase-title";
 
 		if (this.config.title) {
@@ -85,31 +86,6 @@ Module.register("MMM-MoonPhase", {
 		const phase = document.createElement("p");
 		phase.id = "moonphase-phase";
 
-		if (!this.config.phase){ 
-			phase.style.display = "none";
-		}
-
-		const age = document.createElement("p");
-		age.id  = "moonphase-age";
-
-		if (!this.config.age){ 
-			age.style.display = "none";
-		}
-
-		this.drawCanvas(age, phase, moonCanvas);
-
-		// Appending our elements to the DOM object
-		wrapper.appendChild(title);
-		wrapper.appendChild(moonCanvas);
-		wrapper.appendChild(phase);
-		wrapper.appendChild(age);
-		return wrapper;
-	},
-	drawCanvas: function(age, phase, canvas){
-		const jDate = this.moonData.jDate;
-		const ctx = canvas.getContext("2d");
-		this.drawAxisCircles(jDate, ctx);
-
 		if (jDate[1] < 1 || jDate[1] > 29){
 			phase.innerHTML = this.translate("NEW");
 		} else if (jDate[1] > 1 && jDate[1] < 7){
@@ -127,6 +103,31 @@ Module.register("MMM-MoonPhase", {
 		} else if (jDate[1] > 23 && jDate[1] < 29){
 			phase.innerHTML = this.translate("WAN_CRESC");
 		}
+
+		if (!this.config.phase){ 
+			phase.style.display = "none";
+		}
+
+		const age = document.createElement("p");
+		age.id  = "moonphase-age";
+
+		if (!this.config.age){ 
+			age.style.display = "none";
+		}
+
+		this.drawCanvas(age, moonCanvas);
+
+		// Appending our elements to the DOM object
+		wrapper.appendChild(title);
+		wrapper.appendChild(moonCanvas);
+		wrapper.appendChild(phase);
+		wrapper.appendChild(age);
+		return wrapper;
+	},
+	drawCanvas: function(age, canvas){
+		const jDate = this.moonData.jDate;
+		const ctx = canvas.getContext("2d");
+		this.drawAxisCircles(jDate, ctx);
 
 		// Transforming the moon image to align with the southern hemisphere
 		if (this.config.hemisphere.toUpperCase() === "S"){
