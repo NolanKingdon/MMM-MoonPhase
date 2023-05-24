@@ -1,4 +1,3 @@
-/* global Module */
 /* Magic Mirror
  * Module: MMM-MoonPhase
  *
@@ -12,7 +11,7 @@ Module.register("MMM-MoonPhase", {
 		updateInterval: 43200000, // Every Twelve hours
 		hemisphere: "N", // N or S
 		resolution: "detailed", // Detailed Or basic
-		basicColor: "white", // If basic moon (shape only) is used, this is it's color
+		basicColor: "#FFF", // If basic moon (shape only) is used, this is it's color
 		title: true, // Whether or not the Moon Phase Title is displayed
 		phase: true, // Label for what moon phase it is
 		age: false, // Display the age of the moon in days
@@ -40,6 +39,10 @@ Module.register("MMM-MoonPhase", {
 		];
 	},
 	getTranslations: function() {
+		/* If adding translations for the module,
+		 * add the reference to the json file you
+		 * created here!
+		 */
 		return {
 			en: "translations/en.json",
 			de: "translations/de.json",
@@ -133,12 +136,9 @@ Module.register("MMM-MoonPhase", {
 			canvas.style.transform = "rotate(180deg)";
 		}
 
-		// Add age of the moon
 		age.innerHTML = Math.round(jDate[1]) + " " + this.translate("DAYS");
 	},
-	// Draw three axis circles
 	drawAxisCircles: function(jDate, ctx) {
-		// Clear canvas
 		ctx.clearRect(0, 0, this.config.x, this.config.y);
 
 		if (this.config.resolution === "basic"){
