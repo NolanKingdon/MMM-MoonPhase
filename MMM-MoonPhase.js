@@ -8,41 +8,36 @@
  */
 
 Module.register("MMM-MoonPhase", {
-	defaults: { //TODOs - Commented out
+	defaults: { 
 		updateInterval: 43200000, // Every Twelve hours
-		hemisphere: "N", //N or S
-		resolution: "detailed", // detailed Or basic
-		basicColor: "white", // "#ffffbe" is a good one
-		title: true, //Whether or not the Moon Phase Title is displayed
-		phase: true, //Label for what moon phase it is
-		age: false, //display the age of the moon in days
+		hemisphere: "N", // N or S
+		resolution: "detailed", // Detailed Or basic
+		basicColor: "white", // If basic moon (shape only) is used, this is it's color
+		title: true, // Whether or not the Moon Phase Title is displayed
+		phase: true, // Label for what moon phase it is
+		age: false, // Display the age of the moon in days
 		x: 200, // x dimension
 		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
-		alpha: 1 // not yet implemented - visibility of the moon behind the shadow - 1 is fully blacked out
+		alpha: 0.8 // Visibility of the moon behind the shadow - 1 is fully blacked out
 	},
-
 	requiresVersion: "2.1.0", // Required version of MagicMirror
-
 	start: function() {
-		var self = this;
-		var dataRequest = null;
-		var dataNotification = null;
-
-		//Flag for check if module is loaded
+		const self = this;
+		
+		// Flag for check if module is loaded
 		this.loaded = false;
 
 		// Schedule update timer.
-
 		setInterval(function() {
 			self.updateDom();
 		}, this.config.updateInterval);
 	},
 
 	getDom: function() {
-		// create element wrapper
-		let wrapper = document.createElement("div");
+		// Create element wrapper
+		const wrapper = document.createElement("div");
 		wrapper.id = "moonphase-wrapper";
-		let title   = document.createElement("p");
+		const title   = document.createElement("p");
 		title.id    = "moonphase-title";
 		// If title is turned on - Create Title
 		if (this.config.title) {
@@ -51,36 +46,38 @@ Module.register("MMM-MoonPhase", {
 			title.style.display="none";
 		}
 		// Create Canvas
-		let moonCanvas = document.createElement("canvas");
+		const moonCanvas = document.createElement("canvas");
 		moonCanvas.id  = "moonphase-canvas";
 		moonCanvas.height = this.config.y;
 		moonCanvas.width = this.config.x;
-		//Adding in the background img
+
+		// Adding in the background img
 		if (this.config.resolution === "detailed"){
 			moonCanvas.style.background = "url('./MMM-MoonPhase/Phases/full.png?raw=true')";
 			moonCanvas.style.backgroundSize = "cover";
 		}
 
-		//Adding in our moon phase for below the moon
-		let phase   = document.createElement("p");
+		// Adding in our moon phase for below the moon
+		const phase   = document.createElement("p");
 		phase.id    = "moonphase-phase";
 
-		if (!this.config.phase){ // Hiding the title if turned off in config
+		// Hiding the title if turned off in config
+		if (!this.config.phase){ 
 			phase.style.display = "none";
 		}
 
-		//Add in age of moon in days
-		let age = document.createElement("p");
+		// Add in age of moon in days
+		const age = document.createElement("p");
                 age.id  = "moonphase-age";
 
 		if (!this.config.age){ // Hide age if turned off in config
 			age.style.display = "none";
 		}
 
-		//Drawing on the existing canvas
+		// Drawing on the existing canvas
 		this.drawCanvas(age, phase, moonCanvas);
 
-		//Appending our elements to the DOM object
+		// Appending our elements to the DOM object
 		wrapper.appendChild(title);
 		wrapper.appendChild(moonCanvas);
 		wrapper.appendChild(phase);
@@ -91,7 +88,7 @@ Module.register("MMM-MoonPhase", {
 	drawPoint: function(coor, ctx){
 		// If the points z coordinate is less than
 		// zero, it is out of view thus, grey.
-		var color = "transparent";
+		let color = "transparent";
 		if (coor[2] >= 0) {
 			color = "rgba(0,0,0, " + this.config.alpha + ")";
 		}
@@ -136,9 +133,18 @@ Module.register("MMM-MoonPhase", {
 	// Turn for all axis rotations
 	rotate: function(coor) {
 		return this.rotateForAxis(
-			2, this.rotateForAxis(
-				1, this.rotateForAxis(
-					0, coor, rotateA[0]), rotateA[1]), rotateA[2]);
+			2, 
+			this.rotateForAxis(
+				1, 
+				this.rotateForAxis(
+					0, 
+					coor,
+					rotateA[0]
+				),
+				rotateA[1]
+			), 
+			rotateA[2]
+		);
 	},
 
 	// Draw three axis circles
@@ -170,35 +176,51 @@ Module.register("MMM-MoonPhase", {
 		}
 
 		ctx.beginPath();
+
 		for (i = 0; i < 180; i += increaseBy) {
 			ctx.fillStyle = "rgba(0,0,0, " + this.config.alpha + ")";
-			this.drawPoint(this.rotate(this.sphericalToPoint(90, i)), ctx);
+			this.drawPoint(
+				this.rotate(
+					this.sphericalToPoint(90, i)
+				), 
+				ctx
+			);
 		}
-		console.log(jDate[1]);
-		if (jDate[1] < 15){// We are in waxing phases
 
+		if (jDate[1] < 15){ // We are in waxing phases
 			// ClockWise
-			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 0.5*Math.PI, 1.5*Math.PI);
+			ctx.arc(
+				this.config.x/2,
+				this.config.y/2,
+				this.config.x/2,
+				0.5*Math.PI,
+				1.5*Math.PI
+			);
 			ctx.fill();
 		} else if (jDate[1] >= 15){
 			// Arc counter clckwise
-			ctx.arc(this.config.x/2, this.config.y/2, this.config.x/2, 0.5*Math.PI, 1.5*Math.PI, true);
+			ctx.arc(
+				this.config.x/2,
+				this.config.y/2,
+				this.config.x/2,
+				0.5*Math.PI,
+				1.5*Math.PI,
+				true
+			);
 			ctx.fill();
 		}
 	},
 
 	drawCanvas: function(age, phase, canvas){
-		//let testDay = 10;
-   	    let jDate = this.getMoonPhase(); //[testDay%15, testDay];
-
-	    var ctx = canvas.getContext("2d");
+			const jDate = this.getMoonPhase(); //[testDay%15, testDay];
+	    const ctx = canvas.getContext("2d");
 	    increaseBy = 2;
 	    r = this.config.x/2; // radius
 	    // Getting the percentage of the way through the moon cycle so we can use that percent to determing
 	    // How far to draw the curve
 	    rotateA = [0, 360*(jDate[0]/29.5), 0]; // rotation angles
 
-		//Starting the chain to draw the current curve of the moon
+		// Starting the chain to draw the current curve of the moon
 
 		/* NOTE - Math was heavily referenced from here:
 		 *
@@ -210,7 +232,7 @@ Module.register("MMM-MoonPhase", {
 		 */
 		this.drawAxisCircles(jDate, ctx);
 
-		//There's definitely a better way to do this.
+		// There's definitely a better way to do this.
 		if (jDate[1] < 1 || jDate[1] > 29){
 			phase.innerHTML = this.translate("NEW");
 		} else if (jDate[1] > 1 && jDate[1] < 7){
@@ -230,7 +252,9 @@ Module.register("MMM-MoonPhase", {
 		}
 
 		// Transforming the moon image to align with the southern hemisphere
-		if (this.config.hemisphere.toUpperCase() === "S"){canvas.style.transform = "rotate(180deg)";}
+		if (this.config.hemisphere.toUpperCase() === "S"){
+			canvas.style.transform = "rotate(180deg)";
+		}
 
 		// Add age of the moon
 		age.innerHTML = Math.round(jDate[1]) + " " + this.translate("DAYS");
@@ -245,7 +269,6 @@ Module.register("MMM-MoonPhase", {
 
 	// Load translations files
 	getTranslations: function() {
-		//FIXME: This can be load a one file javascript definition
 		return {
 			en: "translations/en.json",
 			de: "translations/de.json",
@@ -266,26 +289,26 @@ Module.register("MMM-MoonPhase", {
 		let m = currDate.getMonth()+1;
 		let y = currDate.getFullYear();
 
-		//Adjusting as per our formula found above
+		// Adjusting as per our formula found above
 		if (m === 1 || m === 2){
 		  y = y-1;
 		  m = m + 12;
 		}
 
-		//Formula to determine number of new moons Julian dates
-		let a   = y/100;
-		let b   = a/4;
-		let c   = 2-a+b;
-		let e   = 365.25 * (y+4716);
-		let f   = 30.6001 * (m+1);
-		let jd  = c + d + e + f - 1524.5;
-		let daysSinceNew  = jd - 2451549.5;
-		let newMoons      = daysSinceNew / 29.53;
-		let moonFraction  = "0." + newMoons.toString().split(".")[1];
-		//Our final Digit - 29.53 days a moon cycle. 15 is full moon. 0/29.5 is new
-		let dayOfCycle    = parseFloat(moonFraction * 29.53);
-		let dayOfCycleMod = dayOfCycle%15; // Allows us to utilize the 180deg math below --> Use the same curve twice = less calc
-		//Returning our modded day AND our actual day
+		// Formula to determine number of new moons Julian dates
+		const a   = y/100;
+		const b   = a/4;
+		const c   = 2-a+b;
+		const e   = 365.25 * (y+4716);
+		const f   = 30.6001 * (m+1);
+		const jd  = c + d + e + f - 1524.5;
+		const daysSinceNew  = jd - 2451549.5;
+		const newMoons      = daysSinceNew / 29.53;
+		const moonFraction  = "0." + newMoons.toString().split(".")[1];
+		// Our final Digit - 29.53 days a moon cycle. 15 is full moon. 0/29.5 is new
+		const dayOfCycle    = parseFloat(moonFraction * 29.53);
+		const dayOfCycleMod = dayOfCycle%15; // Allows us to utilize the 180deg math below --> Use the same curve twice = less calc
+		// Returning our modded day AND our actual day
 		return [dayOfCycleMod, dayOfCycle];
 	},
 	// socketNotificationReceived from helper
