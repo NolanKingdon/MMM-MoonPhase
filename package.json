@@ -1,7 +1,7 @@
 {
-  "name": "MMM-MoonPhase",
+  "name": "mmm-moonphase",
   "version": "1.0.1",
-  "description": "Todo: Insert description here!",
+  "description": "MagicMirror² Module that displays the current moon phase",
   "main": "MMM-MoonPhase.js",
   "author": "Nolan Kingdon",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "grunt": "latest",
     "grunt-eslint": "latest",
     "grunt-jsonlint": "latest",
-    "grunt-markdownlint": "^1.0.13",
+    "grunt-markdownlint": "^3.1.6",
     "grunt-stylelint": "latest",
     "grunt-yamllint": "latest",
     "stylelint-config-standard": "latest",
