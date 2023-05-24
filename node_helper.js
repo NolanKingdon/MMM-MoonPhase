@@ -1,4 +1,4 @@
-/* Magic Mirror
+/* MagicMirror²
  * Node Helper: MMM-MoonPhase
  *
  * By Nolan Kingdon
