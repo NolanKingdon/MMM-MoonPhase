@@ -9,12 +9,9 @@ const NodeHelper = require("node_helper");
 
 module.exports = NodeHelper.create({
 	socketNotificationReceived: function(notification, payload) {
-		console.log('recieved', notification, payload);
 		switch(notification) {
 			case 'CALCULATE_MOONDATA':
-				console.log('Calling getMoonPhase')
 				const data = this.getMoonPhase(payload.x/2);
-				console.log('Got moon data', data);
 				this.sendSocketNotification('CURRENT_MOONDATA', data);
 				break;
 			default:

@@ -56,7 +56,6 @@ Module.register("MMM-MoonPhase", {
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === 'CURRENT_MOONDATA') {
 			this.moonData = payload;
-			console.log('MoonData recieved', payload)
 			this.updateDom();
 		}
 	},
@@ -141,19 +140,6 @@ Module.register("MMM-MoonPhase", {
 	drawAxisCircles: function(jDate, ctx) {
 		// Clear canvas
 		ctx.clearRect(0, 0, this.config.x, this.config.y);
-
-		//Applying blur to our stroke -- TODO - implement smoothly. Right now it ridges the shadow
-		/*if (jDate[1] < 15 && jDate[1] > 0){
-			ctx.shadowOffsetX = 4;
-			//ctx.shadowOffsetY = -10;
-			ctx.shadowColor = "black";
-			ctx.shadowBlur = 10;
-		} else if (jDate[1] >= 16 && jDate[1] < 29){
-			ctx.shadowOffsetX = -4;
-			//ctx.shadowOffsetY = -0;
-			ctx.shadowColor = "black";
-			ctx.shadowBlur = 5;
-		}*/
 
 		if (this.config.resolution === "basic"){
 			ctx.beginPath();
