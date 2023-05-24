@@ -5,13 +5,10 @@
  * Nolan Kingdon
  * MIT Licensed.
  *
- * Custom here your css module
- *
  */
 #moonphase-wrapper {
 	width: 300px;
-	color: white;
-	font-weight: 800;
+	color: var(--color-text-bright);
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
@@ -20,21 +17,20 @@
 #moonphase-title {
 	text-align: center;
 	width: auto;
-	border-bottom: 1px solid white;
+	font-size: var(--font-size-medium);
+	border-bottom: 1px solid var(--color-text-dimmed);
 }
 
 #moonphase-phase {
 	text-align: center;
-	font-weight: 400;
-	color: grey;
-	font-size: 18pt;
+	color: var(--color-text);
+	font-size: var(--font-size-small);
 }
 
 #moonphase-age {
 	text-align: center;
-	font-weight: 400;
-	color: grey;
-	font-size: 18pt;
+	color: var(--color-text);
+	font-size: var(--font-size-small);
 }
 
 #moonphase-canvas {
