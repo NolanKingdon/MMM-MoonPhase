@@ -28,8 +28,8 @@ Module.register("MMM-MoonPhase", {
 		this.sendSocketNotification('CALCULATE_MOONDATA', this.config);
 
 		// Schedule update timer.
-		setInterval(function() {
-			this.sendSocketNotification('CALCULATE_MOONDATA');
+		setInterval(() => {
+			this.sendSocketNotification('CALCULATE_MOONDATA', this.config);
 			// self.updateDom();
 		}, this.config.updateInterval);
 	},
