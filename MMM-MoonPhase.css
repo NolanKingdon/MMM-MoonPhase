@@ -7,40 +7,40 @@
  *
  */
 #moonphase-wrapper {
-	width: 300px;
 	color: var(--color-text-bright);
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+#moonphase-wrapper * { 
+    width: fit-content;
+}
+
+#moonphase-wrapper * {
+    margin: 0;
+    padding: 0;
 }
 
 #moonphase-title {
-	text-align: center;
-	width: auto;
+    margin: 0 0 10px 0;
 	font-size: var(--font-size-medium);
 	border-bottom: 1px solid var(--color-text-dimmed);
 }
 
 #moonphase-phase {
-	text-align: center;
 	color: var(--color-text);
 	font-size: var(--font-size-small);
 }
 
 #moonphase-age {
-	text-align: center;
 	color: var(--color-text);
 	font-size: var(--font-size-small);
 }
 
-#moonphase-canvas {
-	margin-left: auto;
-	margin-right: auto;
-}
-
 #moonrise-container {
     display: flex;
-    justify-content: center;
 	color: var(--color-text);
 	font-size: var(--font-size-small);
     flex-direction: row;
