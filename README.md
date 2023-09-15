@@ -32,12 +32,12 @@ let config = {
 				x: 200,
 				y: 200,
 				alpha: 0.7,
-                riseAndSet: {
-                    display: false,
-                    lon: -80.0,
-                    lat: 40.0,
-                    gmtOffset: -3.0
-                }
+                		riseAndSet: {
+		                    display: false,
+		                    lon: -80.0,
+		                    lat: 40.0,
+		                    gmtOffset: -3.0
+		                }
 			}
 		},
 	]
@@ -69,10 +69,10 @@ Unlike the above config options these configs are not all optional should you en
 
 If you only provide some of the configs within the `riseAndSet` object when this feature is enabled via the `display` option, the time calculation will be off by large amounts of time.
 
-| Option | Description |
-|--------|-------------|
-| `display` | *Optional* Whether or not to run the calculation for the moon rise and set times. Runs at the same interval specified by `updateInterval` in the normal config options. |
-| `lon` | *Required if `display` is `true`* Your longitude. Used as part of the calculation |
-| `lat` | *Required if `display` is `true`* Your lattitude. Used as part of the calculation |
-| `gmtOffset` | *Required if `display` is `true`* The amount of hours **as a decimal** your timezone is behind GMT. For example to represent EST (No DST) you would enter -4.0. |
+| Option      | Description                                                                                                                                                             |
+|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `display`   | *Optional* Whether or not to run the calculation for the moon rise and set times. Runs at the same interval specified by `updateInterval` in the normal config options. |
+| `lon`       | *Required if `display` is `true`* Your longitude. Used as part of the calculation                                                                                       |
+| `lat`       | *Required if `display` is `true`* Your lattitude. Used as part of the calculation                                                                                       |
+| `gmtOffset` | *Required if `display` is `true`* The amount of hours **as a decimal** your timezone is behind GMT. For example to represent EST (No DST) you would enter -4.0.         |
 
