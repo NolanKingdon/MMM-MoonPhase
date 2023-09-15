@@ -17,20 +17,35 @@ Module.register("MMM-MoonPhase", {
 		age: false, // Display the age of the moon in days
 		x: 200, // x dimension
 		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
-		alpha: 0.8 // Visibility of the moon behind the shadow - 1 is fully blacked out
+		alpha: 0.8, // Visibility of the moon behind the shadow - 1 is fully blacked out
+        riseAndSet: {
+            display: false,
+            lon: 0,
+            lat: 0,
+            gmtOffset: 0
+        }
 	},
 	start: function() {
 		const self = this;
 		this.moonData = {
 			points: [],
 			jDate: []
-		}
+		};
+        this.moonTimes = {
+            rise: 0,
+            set: 0
+        };
 		this.sendSocketNotification('CALCULATE_MOONDATA', this.config);
+		if(this.config.riseAndSet.display) {
+            this.sendSocketNotification('CALCULATE_MOONTIMES', this.config.riseAndSet);
+        }
 
 		// Schedule update timer.
 		setInterval(() => {
 			this.sendSocketNotification('CALCULATE_MOONDATA', this.config);
-			// self.updateDom();
+            if( this.config.riseAndSet.display ) {
+                this.sendSocketNotification('CALCULATE_MOONTIMES', this.config.riseAndSet);
+            }
 		}, this.config.updateInterval);
 	},
 	getStyles: function () {
@@ -58,10 +73,18 @@ Module.register("MMM-MoonPhase", {
 		};
 	},
 	socketNotificationReceived: function (notification, payload) {
-		if (notification === 'CURRENT_MOONDATA') {
-			this.moonData = payload;
-			this.updateDom();
-		}
+        switch(notification) {
+            case 'CURRENT_MOONDATA':
+                this.moonData = payload;
+                this.updateDom();
+                break;
+            case 'CURRENT_MOONTIMES':
+                this.moonTimes = payload;
+                this.updateDom()
+                break;
+            default:
+                break;
+        }
 	},
 	getDom: function() {
 		const wrapper = document.createElement("div");
@@ -125,6 +148,19 @@ Module.register("MMM-MoonPhase", {
 		wrapper.appendChild(moonCanvas);
 		wrapper.appendChild(phase);
 		wrapper.appendChild(age);
+
+        // Moon Rise/Set Times
+        if(this.config.riseAndSet.display) {
+            const times = document.createElement("div");
+            times.id = "moonrise-container";
+            times.innerHTML = `
+                <div><span class="fas fa-chevron-up"></span>${this.moonTimes.rise}</div>
+                <div>${this.moonTimes.set}<span class="fas fa-chevron-down"></span></div>
+            `;
+
+            wrapper.appendChild(times);
+        }
+
 		return wrapper;
 	},
 	drawCanvas: function(age, canvas){
