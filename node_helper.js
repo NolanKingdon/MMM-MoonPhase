@@ -17,10 +17,6 @@ module.exports = NodeHelper.create({
 				break;
             case 'CALCULATE_MOONTIMES':
                 const times = this.getMoonTimes(payload.gmtOffset, payload.lon, payload.lat).trim().split(' ');
-                // TODO 
-                // - Make a readable time format.
-                // - Check to see if there's a 24 hour config in core MM?
-                // - Check to see if you can grab moment from here
                 this.sendSocketNotification('CURRENT_MOONTIMES', {
                     rise: this._formatTime(global.config.timeFormat, times[0]),
                     set: this._formatTime(global.config.timeFormat, times[1])
@@ -183,7 +179,7 @@ module.exports = NodeHelper.create({
         //
         // More information on calculating moon rise and set here:
         // https://www.stjarnhimlen.se/comp/riset.html#4
-        meanJulianDays = this._getMeanJulianDays();
+        const meanJulianDays = this._getMeanJulianDays();
         return this._calculateMoonRiseAndSet(meanJulianDays, gmt, lon, lat);
     },
     _getMeanJulianDays: function() {
