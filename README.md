@@ -46,6 +46,8 @@ let config = {
 
 ## Configuration options
 
+### Standard Options
+
 | Option           | Description                                       | Default              | Possible
 |----------------- |---------------------------------------------------|----------------------|-----------
 | `updateInterval` | *Optional* Miliseconds between updates            | `43200000` (12 hours)| any number
