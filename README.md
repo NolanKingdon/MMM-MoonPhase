@@ -4,7 +4,7 @@ This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror
 
 Displays the realtime moonphase and increments the shadow daily.
 
-![Demo Image](https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/2019-06-22-example-moons.png)
+![Demo Image](https://github.com/NolanKingdon/MMM-MoonPhase/blob/master/images/2023-09-15-example-moons.png)
 
 ## Using the module
 
