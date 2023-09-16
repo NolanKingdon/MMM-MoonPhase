@@ -65,6 +65,7 @@ Module.register("MMM-MoonPhase", {
 			sv: "translations/sv.json",
 			es: "translations/es.json",
 			gr: "translations/gr.json",
+			el: "translations/gr.json",
 			pl: "translations/pl.json",
 			it: "translations/it.json",
 			pt: "translations/pt-br.json",
