@@ -24,12 +24,6 @@
     margin-bottom: 10px;
 }
 
-#moonphase-title {
-    margin: 0 0 10px 0;
-	font-size: var(--font-size-medium);
-	border-bottom: 1px solid var(--color-text-dimmed);
-}
-
 #moonphase-phase {
 	color: var(--color-text);
 	font-size: var(--font-size-small);
@@ -45,19 +39,9 @@
 	color: var(--color-text);
 	font-size: var(--font-size-small);
     flex-direction: row;
-
-    /* Add spacing here */
 }
 
 #moonrise-container div {
     margin: 0 5px;
-}
-
-#moonphase-phase {
-    /* Add spacing here */
-}
-
-#moonphase-age {
-    /* Add spacing here */
 }
 
