@@ -20,9 +20,7 @@ Module.register("MMM-MoonPhase", {
 		y: 0, // Depreciated in 1.2 (Use size instead): y dimension of the moon's canvas
 		alpha: 0.8, // Visibility of the moon behind the shadow - 1 is fully blacked out
         moonAlign: "center", // Where the moon aligns to (start/center/end)
-        textAlign: "start", // Where the content under the moon aligns to (start/center/end)
-        // TODO
-        //  - moonDisplay
+        textAlign: "center", // Where the content under the moon aligns to (start/center/end)
         riseAndSet: {
             display: false,
             lon: 0,
@@ -106,7 +104,6 @@ Module.register("MMM-MoonPhase", {
 		moonCanvas.id = "moonphase-canvas";
 		moonCanvas.height = this.config.y;
 		moonCanvas.width = this.config.x;
-        moonCanvas.style.width = `${this.config.x}px`;
         moonCanvas.style.alignSelf = this.config.moonAlign;
 
 		if (this.config.resolution === "detailed"){
