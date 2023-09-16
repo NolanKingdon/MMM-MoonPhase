@@ -15,9 +15,12 @@ Module.register("MMM-MoonPhase", {
 		title: true, // Whether or not the Moon Phase Title is displayed
 		phase: true, // Label for what moon phase it is
 		age: false, // Display the age of the moon in days
-		x: 200, // x dimension
-		y: 200, // y dimension - I really recommend this staays the same as x, but whatever, go nuts
+        size: 200, // Represents the size of the moon
+		x: 0, // Depreciated in 1.2 (Use size instead): x dimension of the moon's canvas
+		y: 0, // Depreciated in 1.2 (Use size instead): y dimension of the moon's canvas
 		alpha: 0.8, // Visibility of the moon behind the shadow - 1 is fully blacked out
+        moonAlign: "center", // Where the moon aligns to (start/center/end)
+        textAlign: "center", // Where the content under the moon aligns to (start/center/end)
         riseAndSet: {
             display: false,
             lon: 0,
@@ -26,7 +29,13 @@ Module.register("MMM-MoonPhase", {
         }
 	},
 	start: function() {
-		const self = this;
+        if(this.config.title) this.data.header = this.translate("TITLE");
+
+        // Gross hack until x/y is removed and the change is propagated everywhere.
+        // Stops us from having to check every time.
+        if(this.config.x === 0) this.config.x = this.config.size;
+        if(this.config.y === 0) this.config.y = this.config.size;
+
 		this.moonData = {
 			points: [],
 			jDate: []
@@ -88,21 +97,14 @@ Module.register("MMM-MoonPhase", {
 	},
 	getDom: function() {
 		const wrapper = document.createElement("div");
-		const title = document.createElement("p");
 		const jDate = this.moonData.jDate;
 		wrapper.id = "moonphase-wrapper";
-		title.id = "moonphase-title";
-
-		if (this.config.title) {
-			title.innerHTML = this.translate("TITLE");
-		} else {
-			title.style.display = "none";
-		}
 
 		const moonCanvas = document.createElement("canvas");
 		moonCanvas.id = "moonphase-canvas";
 		moonCanvas.height = this.config.y;
 		moonCanvas.width = this.config.x;
+        moonCanvas.style.alignSelf = this.config.moonAlign;
 
 		if (this.config.resolution === "detailed"){
 			moonCanvas.style.background = "url('./MMM-MoonPhase/Phases/full.png?raw=true')";
@@ -111,6 +113,7 @@ Module.register("MMM-MoonPhase", {
 
 		const phase = document.createElement("p");
 		phase.id = "moonphase-phase";
+        phase.style.alignSelf = this.config.textAlign;
 
 		if (jDate[1] < 1 || jDate[1] > 29){
 			phase.innerHTML = this.translate("NEW");
@@ -136,6 +139,7 @@ Module.register("MMM-MoonPhase", {
 
 		const age = document.createElement("p");
 		age.id  = "moonphase-age";
+        age.style.alignSelf = this.config.textAlign;
 
 		if (!this.config.age){ 
 			age.style.display = "none";
@@ -144,7 +148,6 @@ Module.register("MMM-MoonPhase", {
 		this.drawCanvas(age, moonCanvas);
 
 		// Appending our elements to the DOM object
-		wrapper.appendChild(title);
 		wrapper.appendChild(moonCanvas);
 		wrapper.appendChild(phase);
 		wrapper.appendChild(age);
@@ -157,6 +160,7 @@ Module.register("MMM-MoonPhase", {
                 <div><span class="fas fa-chevron-up"></span>${this.moonTimes.rise}</div>
                 <div>${this.moonTimes.set}<span class="fas fa-chevron-down"></span></div>
             `;
+            times.style.alignSelf = this.config.textAlign;
 
             wrapper.appendChild(times);
         }
