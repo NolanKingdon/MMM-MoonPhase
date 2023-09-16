@@ -57,9 +57,10 @@ let config = {
 | `title`          | *Optional* Toggle module title                    | `true`               | `true`/`false`
 | `phase`          | *Optional* Toggle phase label                     | `true`               | `true`/`false`
 | `age`            | *Optional* Number of days for the current phase   | `false`              | `true`/`false`
-| `x`              | *Optional* Width (recommended <300)               | `200`                | `>0`
-| `y`              | *Optional* Height (recommended <300)              | `200`                | `>0`
+| `size`           | *Optional* Size (pixels) of moon.                 | `200`                | any number
 | `alpha`          | *Optional* Visibility of dark side of moon        | `0.8` (Transparent)  | `>=0` to `<= 1`
+| `moonAlign`      | *Optional* Flexbox `align-self` for moon canvas   | `center`             | `start`/`center`/`end`
+| `textAlign`      | *Optional* Flexbox `align-self` for text labels   | `center`             | `start`/`center`/`end`
 | `riseAndSet`     | *Optional* Config group for moon rise and set times | See below          | See below
 
 ### Moon Rise/Set Options
@@ -75,4 +76,13 @@ If you only provide some of the configs within the `riseAndSet` object when this
 | `lon`       | *Required if `display` is `true`* Your longitude. Used as part of the calculation                                                                                       |
 | `lat`       | *Required if `display` is `true`* Your lattitude. Used as part of the calculation                                                                                       |
 | `gmtOffset` | *Required if `display` is `true`* The amount of hours **as a decimal** your timezone is behind GMT. For example to represent EST (No DST) you would enter -4.0.         |
+
+### Aditional Configuration
+
+`MoonPhase.css` is set up to enable easy editing of the styles of this module. If you have changes you want but the above config options, feel free to edit the css file on your local. The following id's will likely be what you need:
+
+ - `#moonrise-container` - The `div` that contains the moonrise information
+ - `#moonphase-canvas` - The moon image
+ - `#moonphase-phase`     
+ - `#moonphase-age`
 
