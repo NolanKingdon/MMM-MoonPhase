@@ -29,8 +29,9 @@ let config = {
 				basicColor: "white",
 				title: true,
 				phase: true,
-				x: 200,
-				y: 200,
+                size: 200,
+                moonAlign: "center",
+                textAlign: "center",
 				alpha: 0.7,
                 		riseAndSet: {
 		                    display: false,
