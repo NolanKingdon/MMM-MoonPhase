@@ -98,7 +98,7 @@ Possible values are:
  - `first`
  - `wax_gib`
  - `full`
- - `wan_gib
+ - `wan_gib`
  - `third`
  - `wan_cresc`
 
