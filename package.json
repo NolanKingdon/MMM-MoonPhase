@@ -1,6 +1,6 @@
 {
   "name": "mmm-moonphase",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "MagicMirror² Module that displays the current moon phase",
   "main": "MMM-MoonPhase.js",
   "author": "Nolan Kingdon",
