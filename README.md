@@ -87,3 +87,20 @@ If you only provide some of the configs within the `riseAndSet` object when this
  - `#moonphase-phase`     
  - `#moonphase-age`
 
+### Compliments Integration
+
+This module will emit the `COMPLIMENT_CONTEXT` notification for integration with [MMM-compliments](https://github.com/NolanKingdon/MMM-compliments).
+
+Possible values are:
+
+ - `new`
+ - `wax_cresc`
+ - `first`
+ - `wax_gib`
+ - `full`
+ - `wan_gib
+ - `third`
+ - `wan_cresc`
+
+See the compliments module for more information on how to configure moonphase specific compliments
+
