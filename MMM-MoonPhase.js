@@ -26,7 +26,8 @@ Module.register("MMM-MoonPhase", {
             lon: 0,
             lat: 0,
             gmtOffset: 0
-        }
+        },
+        sendNotifications: false
 	},
 	start: function() {
         if(this.config.title) this.data.header = this.translate("TITLE");
@@ -116,23 +117,26 @@ Module.register("MMM-MoonPhase", {
 		phase.id = "moonphase-phase";
         phase.style.alignSelf = this.config.textAlign;
 
+        let phaseText = "";
 		if (jDate[1] < 1 || jDate[1] > 29){
-			phase.innerHTML = this.translate("NEW");
+            phaseText = "NEW";
 		} else if (jDate[1] > 1 && jDate[1] < 7){
-			phase.innerHTML = this.translate("WAX_CRESC");
+            phaseText = "WAX_CRESC";
 		} else if (jDate[1] >= 7 && jDate[1] <= 8) {
-			phase.innerHTML = this.translate("FIRST");
+            phaseText = "FIRST";
 		} else if (jDate[1] > 8 && jDate[1] < 14){
-			phase.innerHTML = this.translate("WAX_GIB");
+            phaseText = "WAX_GIB";
 		} else if (jDate[1] > 14 && jDate[1] < 16){
-			phase.innerHTML = this.translate("FULL");
+            phaseText = "FULL";
 		} else if (jDate[1] > 16 && jDate[1] < 21){
-			phase.innerHTML = this.translate("WAN_GIB");
+            phaseText = "WAN_GIB";
 		} else if (jDate[1] >= 22 && jDate[1] <= 23) {
-			phase.innerHTML = this.translate("THIRD");
+            phaseText = "THIRD";
 		} else if (jDate[1] > 23 && jDate[1] < 29){
-			phase.innerHTML = this.translate("WAN_CRESC");
+            phaseText = "WAN_CRESC";
 		}
+
+        phase.innerHTML = this.translate(phaseText);
 
 		if (!this.config.phase){ 
 			phase.style.display = "none";
@@ -164,6 +168,14 @@ Module.register("MMM-MoonPhase", {
             times.style.alignSelf = this.config.textAlign;
 
             wrapper.appendChild(times);
+        }
+
+        if(this.config.sendNotifications && phaseText !== "") {
+            let payload = {
+                moonphase: phaseText.toLowerCase()
+            }
+
+            this.sendNotification("COMPLIMENT_CONTEXT", payload);
         }
 
 		return wrapper;
