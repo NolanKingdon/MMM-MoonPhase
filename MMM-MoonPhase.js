@@ -14,7 +14,9 @@ Module.register("MMM-MoonPhase", {
 		basicColor: "#FFF", // If basic moon (shape only) is used, this is it's color
 		title: true, // Whether or not the Moon Phase Title is displayed
 		phase: true, // Label for what moon phase it is
-		age: false, // Display the age of the moon in days
+		age: false, // Display the age of the moon cycle in days,
+        phaseAge: false, // Display how many days the moon has been in it's current phase
+        phaseAgeTotal: false, // When phaseAge = true, display how many total days are in a cycle
         size: 200, // Represents the size of the moon
 		x: 0, // Depreciated in 1.2 (Use size instead): x dimension of the moon's canvas
 		y: 0, // Depreciated in 1.2 (Use size instead): y dimension of the moon's canvas
@@ -118,22 +120,34 @@ Module.register("MMM-MoonPhase", {
         phase.style.alignSelf = this.config.textAlign;
 
         let phaseText = "";
-		if (jDate[1] < 1 || jDate[1] > 29){
+        let phaseAge = [0, 0]; // day (phaseAge[0]) of total (phaseAge[1])
+
+		if (jDate[1] <= 1 || jDate[1] >= 29){
             phaseText = "NEW";
+            // Hardcode for simplicity
+            phaseAge = jDate[1] >= 29 ? [ 1, 2 ] : [ 2, 2 ]
 		} else if (jDate[1] > 1 && jDate[1] < 7){
             phaseText = "WAX_CRESC";
+            // Phase age starts at 1, 
+            phaseAge = [ Math.floor(jDate[1]), 6 ];
 		} else if (jDate[1] >= 7 && jDate[1] <= 8) {
             phaseText = "FIRST";
+            phaseAge = [ Math.floor(jDate[1] - 6), 2 ];
 		} else if (jDate[1] > 8 && jDate[1] < 14){
             phaseText = "WAX_GIB";
-		} else if (jDate[1] > 14 && jDate[1] < 16){
+            phaseAge = [ Math.floor(jDate[1] - 8), 5 ];
+		} else if (jDate[1] >= 14 && jDate[1] < 16){
             phaseText = "FULL";
-		} else if (jDate[1] > 16 && jDate[1] < 21){
+            phaseAge = [ Math.floor(jDate[1] - 13), 2 ];
+		} else if (jDate[1] >= 16 && jDate[1] <= 21){
             phaseText = "WAN_GIB";
+            phaseAge = [ Math.floor(jDate[1] - 15), 6 ];
 		} else if (jDate[1] >= 22 && jDate[1] <= 23) {
             phaseText = "THIRD";
+            phaseAge = [ Math.floor(jDate[1] - 21), 2 ];
 		} else if (jDate[1] > 23 && jDate[1] < 29){
             phaseText = "WAN_CRESC";
+            phaseAge = [ Math.floor(jDate[1] - 23), 5 ];
 		}
 
         phase.innerHTML = this.translate(phaseText);
@@ -152,10 +166,23 @@ Module.register("MMM-MoonPhase", {
 
 		this.drawCanvas(age, moonCanvas);
 
+        const phaseAgeText = document.createElement("p");
+        phaseAgeText.id = "moonphase-phase-age";
+        phaseAgeText.style.alignSelf = this.config.textAlign;
+
+        phaseAgeText.innerHTML = this.config.phaseAgeTotal 
+            ? `${phaseAge[0]} / ${phaseAge[1]} ${this.translate('DAYS')}`
+            : `${phaseAge[0]} ${this.translate('DAYS')}`;
+
+        if(!this.config.phaseAge) {
+            phaseAgeText.style.display = "none";
+        }
+        
 		// Appending our elements to the DOM object
 		wrapper.appendChild(moonCanvas);
 		wrapper.appendChild(phase);
 		wrapper.appendChild(age);
+        wrapper.appendChild(phaseAgeText);
 
         // Moon Rise/Set Times
         if(this.config.riseAndSet.display) {
@@ -181,7 +208,7 @@ Module.register("MMM-MoonPhase", {
 		return wrapper;
 	},
 	drawCanvas: function(age, canvas){
-		const jDate = this.moonData.jDate;
+    const jDate = this.moonData.jDate;
 		const ctx = canvas.getContext("2d");
 		this.drawAxisCircles(jDate, ctx);
 
