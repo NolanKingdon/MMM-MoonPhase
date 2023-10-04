@@ -159,12 +159,13 @@ Module.register("MMM-MoonPhase", {
 		const age = document.createElement("p");
 		age.id  = "moonphase-age";
         age.style.alignSelf = this.config.textAlign;
+		age.innerHTML = Math.round(jDate[1]) + " " + this.translate("DAYS");
 
 		if (!this.config.age){ 
 			age.style.display = "none";
 		}
 
-		this.drawCanvas(age, moonCanvas);
+		this.drawCanvas(moonCanvas);
 
         const phaseAgeText = document.createElement("p");
         phaseAgeText.id = "moonphase-phase-age";
@@ -207,7 +208,7 @@ Module.register("MMM-MoonPhase", {
 
 		return wrapper;
 	},
-	drawCanvas: function(age, canvas){
+	drawCanvas: function(canvas){
     const jDate = this.moonData.jDate;
 		const ctx = canvas.getContext("2d");
 		this.drawAxisCircles(jDate, ctx);
@@ -216,8 +217,6 @@ Module.register("MMM-MoonPhase", {
 		if (this.config.hemisphere.toUpperCase() === "S"){
 			canvas.style.transform = "rotate(180deg)";
 		}
-
-		age.innerHTML = Math.round(jDate[1]) + " " + this.translate("DAYS");
 	},
 	drawAxisCircles: function(jDate, ctx) {
 		ctx.clearRect(0, 0, this.config.x, this.config.y);
