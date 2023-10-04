@@ -24,12 +24,7 @@
     margin-bottom: 10px;
 }
 
-#moonphase-phase {
-	color: var(--color-text);
-	font-size: var(--font-size-small);
-}
-
-#moonphase-age {
+#moonphase-phase, #moonphase-age, #moonphase-phase-age {
 	color: var(--color-text);
 	font-size: var(--font-size-small);
 }

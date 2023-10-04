@@ -49,20 +49,22 @@ let config = {
 
 ### Standard Options
 
-| Option           | Description                                       | Default              | Possible
-|----------------- |---------------------------------------------------|----------------------|-----------
-| `updateInterval` | *Optional* Miliseconds between updates            | `43200000` (12 hours)| any number
-| `hemisphere`     | *Optional* Your location on the earth             | `"N"` (North)        | `"N"`/`"S"`
-| `resolution`     | *Optional* Use detailed moon image or basic circle| `"detailed"`         | `"detailed"`/`"basic"`
-| `basicColor`     | *Optional* Color of moon if using basic resolution| `"white"`            | any valid css color
-| `title`          | *Optional* Toggle module title                    | `true`               | `true`/`false`
-| `phase`          | *Optional* Toggle phase label                     | `true`               | `true`/`false`
-| `age`            | *Optional* Number of days for the current phase   | `false`              | `true`/`false`
-| `size`           | *Optional* Size (pixels) of moon.                 | `200`                | any number
-| `alpha`          | *Optional* Visibility of dark side of moon        | `0.8` (Transparent)  | `>=0` to `<= 1`
-| `moonAlign`      | *Optional* Flexbox `align-self` for moon canvas   | `center`             | `start`/`center`/`end`
-| `textAlign`      | *Optional* Flexbox `align-self` for text labels   | `center`             | `start`/`center`/`end`
-| `riseAndSet`     | *Optional* Config group for moon rise and set times | See below          | See below
+| Option           | Description                                                       | Default              | Possible
+|----------------- |-------------------------------------------------------------------|----------------------|-----------
+| `updateInterval` | *Optional* Miliseconds between updates                            | `43200000` (12 hours)| any number
+| `hemisphere`     | *Optional* Your location on the earth                             | `"N"` (North)        | `"N"`/`"S"`
+| `resolution`     | *Optional* Use detailed moon image or basic circle                | `"detailed"`         | `"detailed"`/`"basic"`
+| `basicColor`     | *Optional* Color of moon if using basic resolution                | `"white"`            | any valid css color
+| `title`          | *Optional* Toggle module title                                    | `true`               | `true`/`false`
+| `phase`          | *Optional* Toggle phase label                                     | `true`               | `true`/`false`
+| `age`            | *Optional* Number of days for the current cycle                   | `false`              | `true`/`false`
+| `phaseAge`       | *Optional* Number of days for the current phase                   | `false`              | `true`/`false`
+| `phaseAgeTotal`  | *Optional* if `phaseAge` is enabled, displays total days in phase | `false`              | `true`/`false`
+| `size`           | *Optional* Size (pixels) of moon.                                 | `200`                | any number
+| `alpha`          | *Optional* Visibility of dark side of moon                        | `0.8` (Transparent)  | `>=0` to `<= 1`
+| `moonAlign`      | *Optional* Flexbox `align-self` for moon canvas                   | `center`             | `start`/`center`/`end`
+| `textAlign`      | *Optional* Flexbox `align-self` for text labels                   | `center`             | `start`/`center`/`end`
+| `riseAndSet`     | *Optional* Config group for moon rise and set times               | See below            | See below
 
 ### Moon Rise/Set Options
 Moon rise and set time options are contained within a sub-section of the config (See 'Using the module' example).
