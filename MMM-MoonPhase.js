@@ -82,7 +82,8 @@ Module.register("MMM-MoonPhase", {
 			it: "translations/it.json",
 			pt: "translations/pt-br.json",
 			ru: "translations/ru.json",
-			cs: "translations/cs.json"
+			cs: "translations/cs.json",
+			nl: "translations/nl.json"
 		};
 	},
 	socketNotificationReceived: function (notification, payload) {
