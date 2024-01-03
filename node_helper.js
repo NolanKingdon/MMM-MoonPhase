@@ -148,6 +148,10 @@ module.exports = NodeHelper.create({
      * Moon rise/set Functions *
      ***************************/
     _formatTime: function(hourScheme, time) {
+        // If the moon does not rise or set on a given day, it will be one of these
+        if(time.includes('-') || time.includes('*')) {
+            return time;
+        }
         if(time.length !== 4) {
             console.error("Invalid time provided");
             return;
@@ -186,9 +190,9 @@ module.exports = NodeHelper.create({
         let a, b;
 
         const today = new Date();
-        const month = today.getMonth() + 1;
+        let month = today.getMonth() + 1;
         const day = today.getDate();
-        const year = today.getFullYear();
+        let year = today.getFullYear();
         const hour = 0.0;
 
         if (month <= 2) {
