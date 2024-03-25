@@ -39,7 +39,7 @@ module.exports = NodeHelper.create({
 		 * A great writeup + the code tool he mentions in the article. These have been a great help
 		 * to me.
 		 */
-		const currDate = new Date();
+		const currDate = new Date(Date.now());
 		let d = currDate.getDate();
 		let m = currDate.getMonth()+1;
 		let y = currDate.getFullYear();
@@ -189,7 +189,7 @@ module.exports = NodeHelper.create({
     _getMeanJulianDays: function() {
         let a, b;
 
-        const today = new Date();
+        const today = new Date(Date.now());
         let month = today.getMonth() + 1;
         const day = today.getDate();
         let year = today.getFullYear();
