@@ -1,6 +1,6 @@
 # MMM-MoonPhase
 
-This is a module for the [MagicMirror²](https://github.com/MichMich/MagicMirror/).
+This is a module for the [MagicMirror²](https://github.com/MagicMirrorOrg/MagicMirror/).
 
 Displays the realtime moonphase and increments the shadow daily.
 
