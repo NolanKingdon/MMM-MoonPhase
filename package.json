@@ -7,6 +7,11 @@
     "type": "git",
     "url": "git+https://github.com/NolanKingdon/MMM-MoonPhase.git"
   },
+  "keywords": [
+    "MagicMirror",
+    "Moon",
+    "Phase",
+  ],
   "author": "Nolan Kingdon",
   "license": "MIT",
   "devDependencies": {
