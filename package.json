@@ -16,13 +16,6 @@
   "author": "Nolan Kingdon",
   "license": "MIT",
   "devDependencies": {
-    "grunt": "latest",
-    "grunt-eslint": "latest",
-    "grunt-jsonlint": "latest",
-    "grunt-markdownlint": "^3.1.6",
-    "grunt-stylelint": "latest",
-    "grunt-yamllint": "latest",
-    "stylelint-config-standard": "latest",
-    "time-grunt": "latest"
+    "stylelint-config-standard": "latest"
   }
 }
