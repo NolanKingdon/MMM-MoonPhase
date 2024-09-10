@@ -226,7 +226,7 @@ Module.register("MMM-MoonPhase", {
 		return wrapper;
 	},
 	drawCanvas: function(canvas){
-    const jDate = this.moonData.jDate;
+		const jDate = this.moonData.jDate;
 		const ctx = canvas.getContext("2d");
 		this.drawAxisCircles(jDate, ctx);
 
