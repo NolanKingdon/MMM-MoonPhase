@@ -29,16 +29,17 @@ let config = {
 				basicColor: "white",
 				title: true,
 				phase: true,
-                		size: 200,
+				nextFull: false,
+				size: 200,
 				moonAlign: "center",
-                		textAlign: "center",
+				textAlign: "center",
 				alpha: 0.7,
-                		riseAndSet: {
-		                    display: false,
-		                    lon: -80.0,
-		                    lat: 40.0,
-		                    gmtOffset: -3.0
-		                }
+				riseAndSet: {
+					display: false,
+					lon: -80.0,
+					lat: 40.0,
+					gmtOffset: -3.0
+				}
 			}
 		},
 	]
@@ -57,6 +58,7 @@ let config = {
 | `basicColor`     | *Optional* Color of moon if using basic resolution                | `"white"`            | any valid css color
 | `title`          | *Optional* Toggle module title                                    | `true`               | `true`/`false`
 | `phase`          | *Optional* Toggle phase label                                     | `true`               | `true`/`false`
+| `nextFull`       | *Optional* Displays the number of days until the next full moon   | `false`              | `true`/`false`
 | `age`            | *Optional* Number of days for the current cycle                   | `false`              | `true`/`false`
 | `phaseAge`       | *Optional* Number of days for the current phase                   | `false`              | `true`/`false`
 | `phaseAgeTotal`  | *Optional* if `phaseAge` is enabled, displays total days in phase | `false`              | `true`/`false`

@@ -17,6 +17,7 @@ Module.register("MMM-MoonPhase", {
 		age: false, // Display the age of the moon cycle in days,
         phaseAge: false, // Display how many days the moon has been in it's current phase
         phaseAgeTotal: false, // When phaseAge = true, display how many total days are in a cycle
+		nextFull: false,
         size: 200, // Represents the size of the moon
 		x: 0, // Depreciated in 1.2 (Use size instead): x dimension of the moon's canvas
 		y: 0, // Depreciated in 1.2 (Use size instead): y dimension of the moon's canvas
@@ -207,10 +208,25 @@ Module.register("MMM-MoonPhase", {
             this.sendNotification("COMPLIMENT_CONTEXT", payload);
         }
 
+		if(this.config.nextFull) {
+			const fullStart = 14;
+			const daysInPhase = jDate[1];
+			const daysInCycle = 29.3;
+			const nextFullMoon = document.createElement("p");
+			const daysUntilFull = Math.round((fullStart - daysInPhase + daysInCycle) % daysInCycle);
+			const displayDays = daysUntilFull > 0 ? daysUntilFull : 29;
+
+			nextFullMoon.innerHTML = `${this.translate("NEXT_FULL")}: ${displayDays} ${this.translate("DAYS")}`;
+			nextFullMoon.id = "next-full-moon";
+			nextFullMoon.style.alignSelf = this.config.textAlign;
+			
+			wrapper.appendChild(nextFullMoon);
+		}
+
 		return wrapper;
 	},
 	drawCanvas: function(canvas){
-    const jDate = this.moonData.jDate;
+		const jDate = this.moonData.jDate;
 		const ctx = canvas.getContext("2d");
 		this.drawAxisCircles(jDate, ctx);
 

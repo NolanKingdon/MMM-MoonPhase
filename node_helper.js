@@ -65,7 +65,7 @@ module.exports = NodeHelper.create({
 		const dayOfCycleMod = dayOfCycle%15; // Allows us to utilize the 180deg math below --> Use the same curve twice = less calc
 
 		const points = [];
-	  const rotateA = [0, 360*(dayOfCycleMod/29.5), 0]; // rotation angles
+        const rotateA = [0, 360*(dayOfCycleMod/29.5), 0]; // rotation angles
 		const increaseBy = 2;
 		
 		for (i = 0; i < 180; i += increaseBy) {
