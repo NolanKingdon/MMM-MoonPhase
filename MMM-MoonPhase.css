@@ -24,7 +24,7 @@
     margin-bottom: 10px;
 }
 
-#moonphase-phase, #moonphase-age, #moonphase-phase-age {
+#moonphase-phase, #moonphase-age, #moonphase-phase-age, #next-full-moon {
 	color: var(--color-text);
 	font-size: var(--font-size-small);
 }
