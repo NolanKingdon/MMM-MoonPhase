@@ -113,7 +113,7 @@ Module.register("MMM-MoonPhase", {
         moonCanvas.style.alignSelf = this.config.moonAlign;
 
 		if (this.config.resolution === "detailed"){
-			moonCanvas.style.background = "url('./MMM-MoonPhase/Phases/full.png?raw=true')";
+			moonCanvas.style.background = "url('modules/MMM-MoonPhase/public/Phases/full.png?raw=true')";
 			moonCanvas.style.backgroundSize = "cover";
 		}
 
