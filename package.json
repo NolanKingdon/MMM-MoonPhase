@@ -1,6 +1,6 @@
 {
   "name": "mmm-moonphase",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "description": "MagicMirror² Module that displays the current moon phase",
   "main": "MMM-MoonPhase.js",
   "repository": {
