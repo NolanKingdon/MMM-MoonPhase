@@ -125,31 +125,31 @@ Module.register("MMM-MoonPhase", {
         let phaseAge = [0, 0]; // day (phaseAge[0]) of total (phaseAge[1])
 
 		if (jDate[1] <= 1 || jDate[1] >= 29){
-            phaseText = "NEW";
-            // Hardcode for simplicity
-            phaseAge = jDate[1] >= 29 ? [ 1, 2 ] : [ 2, 2 ]
+	            phaseText = "NEW";
+	            // Hardcode for simplicity
+	            phaseAge = jDate[1] >= 29 ? [ 1, 2 ] : [ 2, 2 ]
 		} else if (jDate[1] > 1 && jDate[1] < 7){
-            phaseText = "WAX_CRESC";
-            // Phase age starts at 1, 
-            phaseAge = [ Math.floor(jDate[1]), 6 ];
+	            phaseText = "WAX_CRESC";
+	            // Phase age starts at 1, 
+	            phaseAge = [ Math.floor(jDate[1]), 6 ];
 		} else if (jDate[1] >= 7 && jDate[1] <= 8) {
-            phaseText = "FIRST";
-            phaseAge = [ Math.floor(jDate[1] - 6), 2 ];
+	            phaseText = "FIRST";
+	            phaseAge = [ Math.floor(jDate[1] - 6), 2 ];
 		} else if (jDate[1] > 8 && jDate[1] < 14){
-            phaseText = "WAX_GIB";
-            phaseAge = [ Math.floor(jDate[1] - 8), 5 ];
+	            phaseText = "WAX_GIB";
+	            phaseAge = [ Math.floor(jDate[1] - 8), 5 ];
 		} else if (jDate[1] >= 14 && jDate[1] < 16){
-            phaseText = "FULL";
-            phaseAge = [ Math.floor(jDate[1] - 13), 2 ];
-		} else if (jDate[1] >= 16 && jDate[1] <= 21){
-            phaseText = "WAN_GIB";
-            phaseAge = [ Math.floor(jDate[1] - 15), 6 ];
+	            phaseText = "FULL";
+	            phaseAge = [ Math.floor(jDate[1] - 13), 2 ];
+		} else if (jDate[1] >= 16 && jDate[1] < 22){
+	            phaseText = "WAN_GIB";
+	            phaseAge = [ Math.floor(jDate[1] - 15), 6 ];
 		} else if (jDate[1] >= 22 && jDate[1] <= 23) {
-            phaseText = "THIRD";
-            phaseAge = [ Math.floor(jDate[1] - 21), 2 ];
+	            phaseText = "THIRD";
+	            phaseAge = [ Math.floor(jDate[1] - 21), 2 ];
 		} else if (jDate[1] > 23 && jDate[1] < 29){
-            phaseText = "WAN_CRESC";
-            phaseAge = [ Math.floor(jDate[1] - 23), 5 ];
+	            phaseText = "WAN_CRESC";
+	            phaseAge = [ Math.floor(jDate[1] - 23), 5 ];
 		}
 
         phase.innerHTML = this.translate(phaseText);
